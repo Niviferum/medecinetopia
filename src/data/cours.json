@@ -1,0 +1,180 @@
+[
+  {
+    "subject": "Tête et cou",
+    "icon": "🧠",
+    "color": "#c8894a",
+    "cours": [
+      { "type": "CM1", "title": "Ostéologie et région crâne",                                      "date": "2026-02-09", "support": "vidéo" },
+      { "type": "CM2", "title": "Ostéologie et région face",                                       "date": "2026-02-09", "support": "vidéo" },
+      { "type": "CM3", "title": "Muscles et fascia de la tête et du cou",                          "date": "2026-02-10", "support": "vidéo" },
+      { "type": "CM4", "title": "Vascularisation artérielle, veineuse, lymphatique (Pt 1)",        "date": "2026-02-16", "support": "vidéo" },
+      { "type": "CM5", "title": "Vascularisation artérielle, veineuse, lymphatique (Pt 2)",        "date": "2026-02-20", "support": "vidéo" },
+      { "type": "CM6", "title": "Corps thyroïde",                                                  "date": "2026-02-25", "support": "vidéo" },
+      { "type": "CM7", "title": "Cavité orale, langue",                                            "date": "2026-02-26", "support": "vidéo" },
+      { "type": "CM8", "title": "Glandes salivaires",                                              "date": "2026-03-05", "support": "vidéo" },
+      { "type": "CM9", "title": "Radioanatomie",                                                   "date": "2026-04-24", "support": "amphi" }
+    ]
+  },
+  {
+    "subject": "Appareil digestif",
+    "icon": "🫁",
+    "color": "#a06830",
+    "cours": [
+      { "type": "CM1",  "title": "Embryologie de la cavité abdominale et des organes abdominaux",                        "support": "vidéo" },
+      { "type": "CM2",  "title": "Muscles de la paroi abdominale",                                                       "support": "vidéo" },
+      { "type": "CM3",  "title": "Cavité péritonéale",                                                                   "support": "vidéo" },
+      { "type": "CM4",  "title": "Les organes abdominaux",                                                               "support": "vidéo" },
+      { "type": "CM5",  "title": "Vascularisation",                                                                      "support": "vidéo" },
+      { "type": "CM6",  "title": "Vascularisation + innervation pelvis",                           "date": "2026-02-13", "support": "amphi" },
+      { "type": "CM7",  "title": "Rapport",                                                                              "support": "vidéo" },
+      { "type": "CM8",  "title": "Régions de l'abdomen",                                                                 "support": "vidéo" },
+      { "type": "CM9",  "title": "Anatomie sectorielle",                                                                 "support": "vidéo" },
+      { "type": "CM10", "title": "Histologie des glandes salivaires, œsophage, estomac, grêle et côlon", "date": "2026-02-11", "support": "amphi" },
+      { "type": "CM11", "title": "Histologie du foie, des voies biliaires",                        "date": "2026-02-27", "support": "amphi" },
+      { "type": "CM12", "title": "Histologie du pancréas",                                         "date": "2026-02-27", "support": "amphi" },
+      { "type": "CM13", "title": "Tube digestif et activité motrice",                              "date": "2026-03-05", "support": "amphi" },
+      { "type": "CM14", "title": "Tube digestif et activité endo/exocrine",                        "date": "2026-03-05", "support": "amphi" },
+      { "type": "CM15", "title": "Radioanatomie de l'appareil digestif",                           "date": "2026-04-15", "support": "amphi" },
+      { "type": "CM16", "title": "Biochimie de la digestion",                                      "date": "2026-03-27", "support": "amphi" },
+      { "type": "CM17", "title": "Explorations biochimiques du foie",                              "date": "2026-03-30", "support": "amphi" },
+      { "type": "CM18", "title": "La fonction de déglutition",                                     "date": "2026-04-09", "support": "amphi" }
+    ]
+  },
+  {
+    "subject": "Appareil rénal et voies urinaires",
+    "icon": "🫘",
+    "color": "#7aad6e",
+    "cours": [
+      { "type": "CM1",  "title": "Ostéologie du bassin",                                           "date": "2026-02-18", "support": "amphi" },
+      { "type": "CM2",  "title": "Myologie du bassin et du périnée",                                                    "support": "vidéo" },
+      { "type": "CM3",  "title": "Reins, surrénales et rétropéritoine",                            "date": "2026-03-04", "support": "amphi" },
+      { "type": "CM4",  "title": "Uretères et bas appareil urinaire",                              "date": "2026-03-04", "support": "amphi" },
+      { "type": "CM5",  "title": "Rectum",                                                         "date": "2026-02-18", "support": "amphi" },
+      { "type": "CM6",  "title": "Organes génitaux masculins et féminins",                                              "support": "vidéo" },
+      { "type": "CM7",  "title": "Vascularisation et innervation petit bassin et périnée",         "date": "2026-02-20", "support": "amphi" },
+      { "type": "CM8",  "title": "Organisation générale du rein",                                  "date": "2026-02-23", "support": "amphi" },
+      { "type": "CM9",  "title": "Néphron, unité fonctionnelle du rein",                           "date": "2026-02-23", "support": "amphi" },
+      { "type": "CM10", "title": "Les voies excrétrices",                                          "date": "2026-02-24", "support": "amphi" },
+      { "type": "CM11", "title": "Développement embryologique",                                    "date": "2026-02-24", "support": "amphi" },
+      { "type": "CM12", "title": "Le débit sanguin rénal : l'autorégulation",                     "date": "2026-03-04", "support": "amphi" },
+      { "type": "CM13", "title": "Mécanismes de la filtration glomérulaire",                       "date": "2026-03-04", "support": "amphi" },
+      { "type": "CM14", "title": "Physiologie du tubule rénal",                                                         "support": "ronéo" },
+      { "type": "CM15", "title": "Physiologie de la miction",                                                           "support": "ronéo" },
+      { "type": "CM16", "title": "Les compartiments liquidiens de l'organisme",                    "date": "2026-03-26", "support": "amphi" },
+      { "type": "CM17", "title": "Exploration de la fonction rénale",                              "date": "2026-04-09", "support": "amphi" },
+      { "type": "CM18", "title": "Équilibre acido-basique",                                        "date": "2026-03-30", "support": "amphi" },
+      { "type": "CM19", "title": "Radio-anatomie de l'appareil urinaire",                          "date": "2026-04-13", "support": "amphi" },
+      { "type": "CM20", "title": "La fonction vésico-sphinctérienne et anorectale",                "date": "2026-04-28", "support": "amphi" }
+    ]
+  },
+  {
+    "subject": "Appareil neurosensoriel 2",
+    "icon": "🧬",
+    "color": "#3d7a6a",
+    "cours": [
+      { "type": "CM13", "title": "Neurotransmission",                                              "date": "2026-03-02", "support": "visio" },
+      { "type": "CM14", "title": "Réseaux de neurones",                                            "date": "2026-03-02", "support": "visio" },
+      { "type": "CM15", "title": "Physiologie de la motricité volontaire",                         "date": "2026-02-11", "support": "amphi" },
+      { "type": "CM16", "title": "Régulation de la motricité",                                     "date": "2026-02-11", "support": "amphi" },
+      { "type": "CM17", "title": "Neurophysio : audition, olfaction, gustation",                   "date": "2026-04-15", "support": "amphi" },
+      { "type": "CM18", "title": "Physio SNA",                                                     "date": "2026-03-19", "support": "amphi" },
+      { "type": "CM19", "title": "Physio somesthésie : nociception et analgésie",                  "date": "2026-03-20", "support": "amphi" },
+      { "type": "CM20", "title": "Neurophysio veille/sommeil",                                     "date": "2026-03-02", "support": "visio" },
+      { "type": "CM21", "title": "Régulation veille/sommeil",                                      "date": "2026-03-02", "support": "visio" },
+      { "type": "CM22", "title": "Bases neurophysio de la mémoire",                                "date": "2026-03-02", "support": "visio" },
+      { "type": "CM23", "title": "Praxie, gnosie, langage",                                        "date": "2026-03-02", "support": "visio" },
+      { "type": "CM24", "title": "Confusion, coma",                                                "date": "2026-03-19", "support": "amphi" },
+      { "type": "CM25", "title": "Embryologie du SNC",                                             "date": "2026-04-03", "support": "amphi" },
+      { "type": "CM26", "title": "Histologie du SNC et des nerfs",                                 "date": "2026-04-03", "support": "amphi" },
+      { "type": "CM27", "title": "Organes des sens : œil et oreilles",                             "date": "2026-04-20", "support": "amphi" },
+      { "type": "CM28", "title": "Sémiologie neuroradiologique",                                   "date": "2026-04-24", "support": "amphi" },
+      { "type": "CM29", "title": "Bases biophysiques de l'optique",                                "date": "2026-04-14", "support": "amphi" },
+      { "type": "CM30", "title": "Bases biophysiques de l'audition et explorations fonctionnelles auditives", "date": "2026-04-17", "support": "amphi" },
+      { "type": "CM31", "title": "Régulation des émotions, des cognitions sociales et de l'humeur","date": "2026-04-20", "support": "amphi" },
+      { "type": "CM32", "title": "Motivation et circuit de la récompense" },
+      { "type": "CM33", "title": "Explorations de la fonction auditive",                            "date": "2026-03-25", "support": "amphi" }
+    ]
+  },
+  {
+    "subject": "Sciences Humaines et Sociales",
+    "icon": "💬",
+    "color": "#a8d4f0",
+    "cours": [
+      { "type": "CM1",  "title": "Introduction à l'éthique : principisme",                         "date": "2026-02-09", "support": "amphi" },
+      { "type": "CM3",  "title": "Biopolitique",                                                   "date": "2026-04-13", "support": "amphi" },
+      { "type": "CM4",  "title": "Épistémologie du raisonnement médical",                          "date": "2026-04-23", "support": "amphi" },
+      { "type": "CM5",  "title": "IA en santé",                                                    "date": "2026-03-03", "support": "amphi" },
+      { "type": "CM6",  "title": "Les pauvres sont-ils de mauvais malades ?",                      "date": "2026-03-23", "support": "amphi" },
+      { "type": "CM7",  "title": "Santé et environnement : anthropocène",                          "date": "2026-03-30", "support": "amphi" },
+      { "type": "CM8",  "title": "Handicap",                                                       "date": "2026-03-23", "support": "amphi" },
+      { "type": "CM9",  "title": "Éthique de la prescription",                                     "date": "2026-02-17", "support": "amphi" },
+      { "type": "CM10", "title": "Parler pour éduquer ?",                                          "date": "2026-02-02", "support": "amphi" },
+      { "type": "CM11", "title": "La santé est-elle culturelle ?",                                 "date": "2026-04-20", "support": "amphi" }
+    ]
+  },
+  {
+    "subject": "Immunopathologie",
+    "icon": "🛡️",
+    "color": "#e8c87a",
+    "cours": [
+      { "type": "CM1", "title": "Mécanismes physiopathologiques et principes de l'exploration de l'auto-immunité",                      "support": "vidéo" },
+      { "type": "CM2", "title": "Anticorps monoclonaux, Ig polyvalentes et biothérapies",                                               "support": "vidéo" },
+      { "type": "CM3", "title": "Mécanismes physiopatho des réactions d'hypersensibilité et immunothérapie spécifique de l'allergène",  "support": "vidéo" },
+      { "type": "CM4", "title": "Mécanisme d'action des vaccins",                                                                       "support": "vidéo" },
+      { "type": "CM5", "title": "Mécanismes des déficits immunitaires d'origine génétique",                                             "support": "vidéo" },
+      { "type": "CM6", "title": "Bases physiopathologiques des déficits immunitaires acquis, VIH",                                      "support": "vidéo" },
+      { "type": "CM7", "title": "Syndrome lymphoprolifératif",                                                                          "support": "vidéo" },
+      { "type": "CM8", "title": "Mécanismes de l'alloréactivité, des rejets de greffe et de la GVH, greffe d'organes, CSH",            "support": "vidéo" }
+    ]
+  },
+  {
+    "subject": "Hématologie",
+    "icon": "🩸",
+    "color": "#c8894a",
+    "cours": [
+      { "type": "CM1",  "title": "Introduction aux hémopathies malignes",                          "date": "2026-02-03", "support": "amphi" },
+      { "type": "CM2",  "title": "Hémogramme chez l'adulte et l'enfant",                                                "support": "vidéo" },
+      { "type": "CM3",  "title": "Hyperleucocytoses",                                                                   "support": "vidéo" },
+      { "type": "CM4",  "title": "Leucopénies",                                                                         "support": "vidéo" },
+      { "type": "CM5",  "title": "Syndrome mononucléosique et hyperéosinophilie",                  "date": "2026-02-03", "support": "amphi" },
+      { "type": "CM6",  "title": "Méthode d'exploration de la lignée leucocytaire",                                     "support": "vidéo" },
+      { "type": "CM7",  "title": "Anémies",                                                        "date": "2026-03-03", "support": "amphi" },
+      { "type": "CM8",  "title": "Polyglobulies",                                                  "date": "2026-03-06", "support": "amphi" },
+      { "type": "CM9",  "title": "Examen d'un patient suspect d'une anomalie hématologique",       "date": "2026-03-06", "support": "amphi" },
+      { "type": "CM10", "title": "Exploration fonctionnelle du tissu sanguin par les radio-isotopes", "date": "2026-03-17", "support": "amphi" },
+      { "type": "CM11", "title": "Hémorragies et thromboses",                                      "date": "2026-04-14", "support": "amphi" },
+      { "type": "CM12", "title": "Introduction à la transfusion sanguine : du donneur au receveur","date": "2026-04-13", "support": "amphi" },
+      { "type": "CM13", "title": "Outils d'exploration biologique en hémostase",                   "date": "2026-04-14", "support": "amphi" },
+      { "type": "CM14", "title": "Cible thérapeutique et mécanismes d'action des médicaments de l'hémostase", "date": "2026-04-21", "support": "amphi" },
+      { "type": "CM15", "title": "Thrombocytoses et thrombopénies",                                "date": "2026-04-21", "support": "amphi" }
+    ]
+  },
+  {
+    "subject": "Hormonologie",
+    "icon": "⚗️",
+    "color": "#a06830",
+    "cours": [
+      { "type": "CM1",  "title": "Généralités sur le système endocrinien",                         "date": "2026-02-05", "support": "amphi" },
+      { "type": "CM2",  "title": "Généralités sur la sémiologie biologique hormonale",             "date": "2026-02-06", "support": "amphi" },
+      { "type": "CM3",  "title": "Exploration radiologique hypothalamus/hypophyse",                "date": "2026-03-06", "support": "amphi" },
+      { "type": "CM4",  "title": "Histologie et développement : hypothalamus et hypophyse",        "date": "2026-02-16", "support": "amphi" },
+      { "type": "CM5",  "title": "Biochimie des hormones hypothalamiques/hypophysaires et de leurs récepteurs", "date": "2026-02-20", "support": "amphi" },
+      { "type": "CM6",  "title": "Histologie cortico-médullosurrénales",                           "date": "2026-02-16", "support": "amphi" },
+      { "type": "CM7",  "title": "Biochimie des hormones stéroïdes et catécholamines",             "date": "2026-02-13", "support": "amphi" },
+      { "type": "CM8",  "title": "Physio surrénalienne - axe corticotrope",                        "date": "2026-02-05", "support": "amphi" },
+      { "type": "CM9",  "title": "Insuffisance surrénale, hypercortisolisme",                      "date": "2026-02-12", "support": "visio" },
+      { "type": "CM10", "title": "Exploration radio non isotopique des surrénales",                "date": "2026-02-16", "support": "amphi" },
+      { "type": "CM11", "title": "Puberté normale : hypogonadismes, hyperandrogénie",             "date": "2026-02-19", "support": "visio" },
+      { "type": "CM12", "title": "Physio de l'hormone de croissance",                             "date": "2026-02-19", "support": "amphi" },
+      { "type": "CM13", "title": "Croissance, déficit en GH, âge osseux, acromégalie",            "date": "2026-02-19", "support": "visio" },
+      { "type": "CM14", "title": "Thyroïde et parathyroïde : histologie",                         "date": "2026-02-16", "support": "amphi" },
+      { "type": "CM15", "title": "Biochimie des hormones thyroïdiennes et parathyroïdiennes",     "date": "2026-02-20", "support": "amphi" },
+      { "type": "CM16", "title": "Physio thyroïdienne/parathyroïdienne",                          "date": "2026-02-19", "support": "amphi" },
+      { "type": "CM17", "title": "Dysthyroïdies",                                                 "date": "2026-02-12", "support": "visio" },
+      { "type": "CM18", "title": "Thyroïde et parathyroïde : exploration radio non isotopique",   "date": "2026-02-17", "support": "amphi" },
+      { "type": "CM19", "title": "Médecine nucléaire en endocrinologie",                           "date": "2026-02-24", "support": "amphi" },
+      { "type": "CM20", "title": "Aspects biochimiques du pancréas endocrine",                    "date": "2026-03-30", "support": "amphi" },
+      { "type": "CM21", "title": "Régulation de la glycémie",                                     "date": "2026-02-12", "support": "visio" }
+    ]
+  }
+]

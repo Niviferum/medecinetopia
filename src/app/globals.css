@@ -1,26 +1,75 @@
-@import "tailwindcss";
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-display: var(--font-lora);
+  --font-body: var(--font-rounded);
+
+  /* Palette extraite de l'image classroom */
+  --color-wood:      #c8894a;
+  --color-wood-dark: #a06830;
+  --color-cream:     #f5efe4;
+  --color-warm-white:#fdf8f2;
+  --color-sky:       #a8d4f0;
+  --color-plant:     #7aad6e;
+  --color-chalk:     #3d7a6a;
+  --color-gold:      #e8c87a;
+  --color-text:      #3d2e22;
+  --color-text-muted:#a08060;
+
+  /* Glass */
+  --glass-bg:        rgba(255, 248, 235, 0.18);
+  --glass-bg-dark:   rgba(40, 22, 6, 0.38);
+  --glass-bg-warm:   rgba(200, 130, 60, 0.22);
+  --glass-border:    rgba(255, 220, 160, 0.28);
+  --glass-blur:      18px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html, body {
+  height: 100%;
+  font-family: var(--font-body), sans-serif;
+  color: var(--color-text);
+  background: #1a1000;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+h1, h2, h3, h4 {
+  font-family: var(--font-display), serif;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+button {
+  cursor: pointer;
+  font-family: var(--font-body), sans-serif;
+}
+
+input, textarea {
+  font-family: var(--font-body), sans-serif;
+}
+
+/* Scrollbar discrète */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(200, 137, 74, 0.3); border-radius: 99px; }
+
+/* Cours done strikethrough animation */
+@keyframes strikethrough {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+.cours-done {
+  position: relative;
+  opacity: 0.5;
+}
+
+.cours-done::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 1px;
+  background: rgba(245, 239, 228, 0.5);
+  animation: strikethrough 0.4s ease forwards;
 }
