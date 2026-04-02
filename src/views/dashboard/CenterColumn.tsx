@@ -1,126 +1,51 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { GlassCard } from "@/views/ui/GlassCard";
+import { PostitBoard } from "@/views/dashboard/PostitBoard";
 import type { Subject, Cours } from "@/types";
 import type { DashboardTab } from "@/views/layout/Topbar";
+
+interface SubjectWithProgress extends Subject {
+  total: number;
+  done: number;
+}
 
 interface CenterColumnProps {
   activeTab: DashboardTab;
 }
 
-// ── Helpers ────────────────────────────────────────────────────────────────
-
-function formatDate(iso: string | null) {
-  if (!iso) return null;
-  return new Date(iso).toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
-}
-
-// ── Confirmation modal ─────────────────────────────────────────────────────
-
-function ConfirmModal({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) {
-  return (
-    <div
-      style={{
-        position: "fixed", inset: 0, zIndex: 100,
-        background: "rgba(26,16,0,0.6)", backdropFilter: "blur(4px)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-      }}
-      onClick={onCancel}
-    >
-      <div
-        style={{
-          background: "rgba(40,22,6,0.95)", border: "1px solid rgba(255,220,160,0.2)",
-          borderRadius: 16, padding: 28, maxWidth: 320, width: "90%",
-          textAlign: "center",
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <p style={{ fontSize: 22, marginBottom: 8 }}>✅</p>
-        <p style={{ color: "#f5efe4", fontFamily: "var(--font-lora), serif", fontSize: 16, marginBottom: 6 }}>
-          Cours validé ?
-        </p>
-        <p style={{ color: "rgba(245,239,228,0.45)", fontSize: 13, marginBottom: 20 }}>
-          Cette action ne peut pas être annulée.
-        </p>
-        <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
-          <button onClick={onCancel} style={cancelBtnStyle}>Pas encore</button>
-          <button onClick={onConfirm} style={confirmBtnStyle}>Oui, validé ✓</button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-const confirmBtnStyle: React.CSSProperties = {
-  padding: "8px 18px", borderRadius: 10, border: "none", cursor: "pointer",
-  background: "linear-gradient(135deg, #c8894a, #e8c87a)", color: "#3d2e22",
-  fontSize: 13, fontWeight: 700,
-};
-const cancelBtnStyle: React.CSSProperties = {
-  padding: "8px 18px", borderRadius: 10, cursor: "pointer",
-  background: "transparent", border: "1px solid rgba(255,220,160,0.2)",
-  color: "rgba(245,239,228,0.5)", fontSize: 13,
-};
-
-// ── Edit modal ─────────────────────────────────────────────────────────────
-
-function EditModal({
-  cours, onSave, onClose,
-}: {
-  cours: Cours;
-  onSave: (dto: Partial<Cours>) => void;
-  onClose: () => void;
-}) {
-  const [title, setTitle] = useState(cours.title);
-  const [type, setType] = useState(cours.type ?? "");
-  const [date, setDate] = useState(cours.date ?? "");
-  const [support, setSupport] = useState(cours.support ?? "");
+function AddSubjectModal({ onAdd, onClose }: { onAdd: (name: string) => void; onClose: () => void }) {
+  const [name, setName] = useState("");
+  const ref = useRef<HTMLInputElement>(null);
+  useEffect(() => { ref.current?.focus(); }, []);
 
   return (
     <div
-      style={{
-        position: "fixed", inset: 0, zIndex: 100,
-        background: "rgba(26,16,0,0.6)", backdropFilter: "blur(4px)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-      }}
+      style={{ position: "fixed", inset: 0, zIndex: 100, background: "rgba(26,16,0,0.6)", backdropFilter: "blur(4px)", display: "flex", alignItems: "center", justifyContent: "center" }}
       onClick={onClose}
     >
       <div
-        style={{
-          background: "rgba(40,22,6,0.95)", border: "1px solid rgba(255,220,160,0.2)",
-          borderRadius: 16, padding: 24, maxWidth: 360, width: "90%",
-        }}
+        style={{ background: "#fdf8f0", border: "1px solid #e8d4b4", borderRadius: 14, padding: 24, maxWidth: 320, width: "90%", boxShadow: "0 8px 32px rgba(160,100,40,0.18)" }}
         onClick={(e) => e.stopPropagation()}
       >
-        <p style={{ color: "#e8c87a", fontFamily: "var(--font-lora), serif", fontSize: 15, marginBottom: 16 }}>
-          Modifier le cours
-        </p>
-        {([
-          ["Titre", title, setTitle, "text"],
-          ["Type (CM1, TD2…)", type, setType, "text"],
-          ["Date", date, setDate, "date"],
-          ["Support (vidéo, amphi…)", support, setSupport, "text"],
-        ] as [string, string, (v: string) => void, string][]).map(([label, val, setter, inputType]) => (
-          <div key={label} style={{ marginBottom: 12 }}>
-            <label style={{ color: "rgba(245,239,228,0.4)", fontSize: 11, display: "block", marginBottom: 4 }}>
-              {label}
-            </label>
-            <input
-              type={inputType}
-              value={val}
-              onChange={(e) => setter(e.target.value)}
-              style={inputStyle}
-            />
-          </div>
-        ))}
-        <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 8 }}>
-          <button onClick={onClose} style={cancelBtnStyle}>Annuler</button>
+        <p style={{ color: "#8b5020", fontFamily: "var(--font-lora), serif", fontSize: 15, marginBottom: 16 }}>Nouvelle matière</p>
+        <input
+          ref={ref}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => { if (e.key === "Enter" && name.trim()) onAdd(name.trim()); if (e.key === "Escape") onClose(); }}
+          placeholder="Nom de la matière…"
+          style={{ width: "100%", padding: "8px 10px", borderRadius: 8, border: "1px solid #e8d4b4", background: "#fff8f0", color: "#2d1a0a", fontSize: 13, boxSizing: "border-box", marginBottom: 14 }}
+        />
+        <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
+          <button onClick={onClose} style={{ padding: "7px 14px", borderRadius: 8, border: "1px solid #e8d4b4", background: "transparent", color: "#9a7050", fontSize: 12, cursor: "pointer" }}>Annuler</button>
           <button
-            onClick={() => onSave({ title, type: type || null, date: date || null, support: support || null })}
-            style={confirmBtnStyle}
+            onClick={() => { if (name.trim()) onAdd(name.trim()); }}
+            style={{ padding: "7px 14px", borderRadius: 8, border: "none", background: "linear-gradient(135deg, #c8894a, #e07840)", color: "#fff8f0", fontSize: 12, fontWeight: 700, cursor: "pointer" }}
           >
-            Sauvegarder
+            Créer
           </button>
         </div>
       </div>
@@ -128,310 +53,170 @@ function EditModal({
   );
 }
 
-const inputStyle: React.CSSProperties = {
-  width: "100%", padding: "7px 10px", borderRadius: 8,
-  border: "1px solid rgba(255,220,160,0.2)", background: "rgba(255,248,235,0.05)",
-  color: "#f5efe4", fontSize: 13, boxSizing: "border-box",
-};
+export function CenterColumn({ activeTab }: CenterColumnProps) {
+  const [subjects, setSubjects] = useState<SubjectWithProgress[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showAdd, setShowAdd] = useState(false);
 
-// ── Cours card ─────────────────────────────────────────────────────────────
+  useEffect(() => {
+    Promise.all([
+      fetch("/api/subjects").then((r) => r.json()),
+      fetch("/api/cours").then((r) => r.json()),
+    ])
+      .then(([subs, allCours]: [Subject[], Cours[]]) => {
+        const countMap: Record<string, { total: number; done: number }> = {};
+        for (const c of allCours) {
+          if (!countMap[c.subject_id]) countMap[c.subject_id] = { total: 0, done: 0 };
+          countMap[c.subject_id].total++;
+          if (c.done) countMap[c.subject_id].done++;
+        }
+        const filtered = subs
+          .filter((s) => countMap[s.id])
+          .map((s) => ({ ...s, ...countMap[s.id] }));
+        setSubjects(filtered);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
 
-function CoursCard({
-  cours,
-  onDone,
-  onEdit,
-  onDelete,
-}: {
-  cours: Cours;
-  onDone: () => void;
-  onEdit: () => void;
-  onDelete: () => void;
-}) {
+  async function handleAddSubject(name: string) {
+    setShowAdd(false);
+    const res = await fetch("/api/subjects", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, icon: "📚", color: "#c8894a" }),
+    });
+    if (res.ok) {
+      const s: Subject = await res.json();
+      setSubjects((prev) => [...prev, { ...s, total: 0, done: 0 }]);
+    }
+  }
+
+  if (activeTab === "postits") {
+    return (
+      <div
+        style={{
+          background: "#f8f8f6",
+          border: "2px solid #ddddd8",
+          borderRadius: 6,
+          boxShadow: "inset 0 1px 12px rgba(0,0,0,0.04), 0 4px 20px rgba(0,0,0,0.10)",
+          padding: 16,
+          minHeight: "calc(100vh - 90px)",
+          overflow: "hidden",
+        }}
+      >
+        <PostitBoard />
+      </div>
+    );
+  }
+
+  if (loading) {
+    return <p style={{ color: "rgba(245,239,228,1.0)", fontSize: 13, fontStyle: "italic", padding: 16 }}>Chargement…</p>;
+  }
+
+  return (
+    <>
+      {showAdd && <AddSubjectModal onAdd={handleAddSubject} onClose={() => setShowAdd(false)} />}
+      <div className="subjects-grid">
+        {subjects.map((s, i) => {
+          const pct = s.total > 0 ? (s.done / s.total) * 100 : 0;
+          return (
+            <Link key={s.id} href={`/dashboard/matiere/${s.id}`} style={{ textDecoration: "none" }}>
+              <SubjectCard subject={s} pct={pct} index={i} />
+            </Link>
+          );
+        })}
+        <AddTile onClick={() => setShowAdd(true)} />
+      </div>
+    </>
+  );
+}
+
+function AddTile({ onClick }: { onClick: () => void }) {
   const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: hovered ? "#fdf0e4" : "#fdf0e4",
+        border: `1px dashed ${hovered ? "#e8c49a" : "#d4b890"}`,
+        borderRadius: 14,
+        padding: "20px 16px 16px",
+        cursor: "pointer",
+        transition: "background 0.15s, border-color 0.15s",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <span style={{ color: hovered ? "#c8894a" : "#d4b890", fontSize: 28, lineHeight: 1 }}>+</span>
+    </div>
+  );
+}
+
+const PASTEL_CARDS = [
+  { bg: "#fde8d4", border: "#e8c49a", bar: "#c8894a" },
+  { bg: "#fce4e8", border: "#e8b4bc", bar: "#d4607a" },
+  { bg: "#e4f0dc", border: "#b4d4a0", bar: "#5a9a3a" },
+  { bg: "#e8e4f4", border: "#c4b8e8", bar: "#7060c0" },
+  { bg: "#deeaf8", border: "#a8c8e8", bar: "#4080c0" },
+  { bg: "#fdf0d0", border: "#e8d098", bar: "#b09020" },
+  { bg: "#f4e4f0", border: "#d8b4d0", bar: "#a04880" },
+  { bg: "#e4f4f0", border: "#a8d8d0", bar: "#2a9080" },
+];
+
+function SubjectCard({ subject: s, pct, index }: { subject: SubjectWithProgress; pct: number; index: number }) {
+  const [hovered, setHovered] = useState(false);
+  const palette = PASTEL_CARDS[index % PASTEL_CARDS.length];
 
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        background: "rgba(40,22,6,0.38)", border: "1px solid rgba(255,220,160,0.1)",
-        borderRadius: 10, padding: "9px 11px", position: "relative",
-        opacity: cours.done ? 0.5 : 1, transition: "opacity 0.3s ease",
+        background: palette.bg,
+        border: `1px solid ${palette.border}`,
+        borderRadius: 14,
+        padding: "20px 16px 16px",
+        cursor: "pointer",
+        boxShadow: hovered
+          ? "0 6px 18px rgba(100,60,20,0.16)"
+          : "0 2px 8px rgba(100,60,20,0.10)",
+        transform: hovered ? "translateY(-2px)" : "none",
+        transition: "box-shadow 0.15s, transform 0.15s",
+        display: "flex",
+        flexDirection: "column",
+        gap: 10,
       }}
     >
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 6 }}>
-        {!cours.done && (
-          <button
-            onClick={onDone}
-            title="Marquer comme fait"
-            style={{
-              flexShrink: 0, marginTop: 1,
-              width: 14, height: 14, borderRadius: 3,
-              border: "1px solid rgba(255,220,160,0.3)",
-              background: "transparent", cursor: "pointer", padding: 0,
-            }}
-          />
-        )}
-        {cours.done && (
-          <span style={{ flexShrink: 0, fontSize: 12, marginTop: 1 }}>✓</span>
-        )}
-        <div style={{ flex: 1, minWidth: 0 }}>
-          {cours.type && (
-            <span style={{ color: "#e8c87a", fontSize: 10, fontWeight: 600, marginRight: 4 }}>
-              {cours.type}
-            </span>
-          )}
-          <span
-            className={cours.done ? "cours-done" : undefined}
-            style={{ color: "#f5efe4", fontSize: 12, lineHeight: 1.4, wordBreak: "break-word" }}
-          >
-            {cours.title}
-          </span>
-          {(cours.date || cours.support) && (
-            <p style={{ color: "rgba(245,239,228,0.35)", fontSize: 10, marginTop: 3 }}>
-              {formatDate(cours.date)}
-              {cours.date && cours.support && " · "}
-              {cours.support}
-            </p>
-          )}
+      <span style={{ fontSize: 30, lineHeight: 1 }}>{s.icon}</span>
+      <p style={{
+        color: "#2d1a0a",
+        fontFamily: "var(--font-lora), serif",
+        fontSize: 12,
+        fontWeight: 600,
+        lineHeight: 1.4,
+        flex: 1,
+      }}>
+        {s.name}
+      </p>
+      <div>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+          <span style={{ color: "#9a7050", fontSize: 10 }}>{s.done}/{s.total}</span>
+          <span style={{ color: pct === 100 ? "#4a8a3a" : "#9a7050", fontSize: 10 }}>{Math.round(pct)}%</span>
+        </div>
+        <div style={{ height: 3, borderRadius: 99, background: "rgba(100,60,20,0.10)", overflow: "hidden" }}>
+          <div style={{
+            height: "100%",
+            width: `${pct}%`,
+            borderRadius: 99,
+            background: pct === 100 ? "#5a9a3a" : palette.bar,
+            transition: "width 0.5s ease",
+          }} />
         </div>
       </div>
-
-      {hovered && !cours.done && (
-        <div style={{ position: "absolute", top: 6, right: 6, display: "flex", gap: 4 }}>
-          <button onClick={onEdit} style={iconBtnStyle} title="Modifier">✏️</button>
-          <button onClick={onDelete} style={iconBtnStyle} title="Supprimer">🗑️</button>
-        </div>
-      )}
     </div>
-  );
-}
-
-const iconBtnStyle: React.CSSProperties = {
-  background: "rgba(40,22,6,0.8)", border: "none", borderRadius: 6,
-  padding: "2px 5px", cursor: "pointer", fontSize: 11,
-};
-
-// ── Add cours form ─────────────────────────────────────────────────────────
-
-function AddCoursForm({ onAdd, onCancel }: { onAdd: (title: string, type: string) => void; onCancel: () => void }) {
-  const [title, setTitle] = useState("");
-  const [type, setType] = useState("");
-  const ref = useRef<HTMLInputElement>(null);
-
-  useEffect(() => { ref.current?.focus(); }, []);
-
-  function submit() {
-    if (!title.trim()) return;
-    onAdd(title.trim(), type.trim());
-  }
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-      <input
-        ref={ref}
-        value={type}
-        onChange={(e) => setType(e.target.value)}
-        placeholder="CM1"
-        style={{ ...inputStyle, fontSize: 11 }}
-      />
-      <input
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        onKeyDown={(e) => { if (e.key === "Enter") submit(); if (e.key === "Escape") onCancel(); }}
-        placeholder="Titre du cours…"
-        style={{ ...inputStyle, fontSize: 12 }}
-      />
-      <div style={{ display: "flex", gap: 6 }}>
-        <button onClick={onCancel} style={{ ...cancelBtnStyle, flex: 1, padding: "6px 0", fontSize: 11 }}>✕</button>
-        <button onClick={submit} style={{ ...confirmBtnStyle, flex: 1, padding: "6px 0", fontSize: 11 }}>Ajouter</button>
-      </div>
-    </div>
-  );
-}
-
-// ── Subject column ─────────────────────────────────────────────────────────
-
-function SubjectColumn({
-  subject, cours, onDone, onEdit, onDelete, onAdd,
-}: {
-  subject: Subject;
-  cours: Cours[];
-  onDone: (c: Cours) => void;
-  onEdit: (c: Cours) => void;
-  onDelete: (c: Cours) => void;
-  onAdd: (subjectId: string, title: string, type: string) => void;
-}) {
-  const [adding, setAdding] = useState(false);
-  const done = cours.filter((c) => c.done).length;
-
-  return (
-    <div style={{ minWidth: 210, maxWidth: 210, display: "flex", flexDirection: "column", gap: 8 }}>
-      <GlassCard variant="dark" style={{ padding: "10px 12px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div>
-            <span style={{ fontSize: 14 }}>{subject.icon}</span>
-            <span style={{ color: "#e8c87a", fontSize: 13, fontWeight: 600, marginLeft: 6, fontFamily: "var(--font-lora), serif" }}>
-              {subject.name}
-            </span>
-          </div>
-          <span style={{ color: "rgba(245,239,228,0.3)", fontSize: 10 }}>{done}/{cours.length}</span>
-        </div>
-      </GlassCard>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: 6, flex: 1 }}>
-        {cours.map((c) => (
-          <CoursCard
-            key={c.id}
-            cours={c}
-            onDone={() => onDone(c)}
-            onEdit={() => onEdit(c)}
-            onDelete={() => onDelete(c)}
-          />
-        ))}
-        {adding ? (
-          <div style={{ background: "rgba(40,22,6,0.38)", border: "1px solid rgba(255,220,160,0.1)", borderRadius: 10, padding: "9px 11px" }}>
-            <AddCoursForm
-              onAdd={(title, type) => { onAdd(subject.id, title, type); setAdding(false); }}
-              onCancel={() => setAdding(false)}
-            />
-          </div>
-        ) : (
-          <button
-            onClick={() => setAdding(true)}
-            style={{
-              background: "transparent", border: "1px dashed rgba(255,220,160,0.15)",
-              borderRadius: 10, padding: "7px 0", color: "rgba(245,239,228,0.25)",
-              fontSize: 12, cursor: "pointer", width: "100%",
-            }}
-          >
-            + Ajouter un cours
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ── Main component ─────────────────────────────────────────────────────────
-
-export function CenterColumn({ activeTab }: CenterColumnProps) {
-  const [subjects, setSubjects] = useState<Subject[]>([]);
-  const [coursMap, setCoursMap] = useState<Record<string, Cours[]>>({});
-  const [loading, setLoading] = useState(true);
-  const [pendingDone, setPendingDone] = useState<Cours | null>(null);
-  const [editing, setEditing] = useState<Cours | null>(null);
-
-  useEffect(() => {
-    Promise.all([
-      fetch("/api/subjects").then((r) => r.json()),
-      fetch("/api/cours").then((r) => r.json()),
-    ]).then(([subs, allCours]: [Subject[], Cours[]]) => {
-      setSubjects(subs);
-      const map: Record<string, Cours[]> = {};
-      for (const s of subs) map[s.id] = [];
-      for (const c of allCours) {
-        if (map[c.subject_id]) map[c.subject_id].push(c);
-      }
-      setCoursMap(map);
-      setLoading(false);
-    }).catch(() => setLoading(false));
-  }, []);
-
-  function updateCoursInMap(updated: Cours) {
-    setCoursMap((prev) => ({
-      ...prev,
-      [updated.subject_id]: (prev[updated.subject_id] ?? []).map((c) =>
-        c.id === updated.id ? updated : c
-      ),
-    }));
-  }
-
-  async function handleDoneConfirm() {
-    if (!pendingDone) return;
-    const res = await fetch(`/api/cours/${pendingDone.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ done: true }),
-    });
-    if (res.ok) {
-      const { cours, xpEarned } = await res.json();
-      updateCoursInMap(cours);
-      if (xpEarned > 0) {
-        window.dispatchEvent(new CustomEvent("medecinetopia:xp", { detail: { xpEarned } }));
-      }
-    }
-    setPendingDone(null);
-  }
-
-  async function handleEdit(id: string, dto: Partial<Cours>) {
-    const res = await fetch(`/api/cours/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dto),
-    });
-    if (res.ok) {
-      const { cours } = await res.json();
-      updateCoursInMap(cours);
-    }
-    setEditing(null);
-  }
-
-  async function handleDelete(c: Cours) {
-    await fetch(`/api/cours/${c.id}`, { method: "DELETE" });
-    setCoursMap((prev) => ({
-      ...prev,
-      [c.subject_id]: (prev[c.subject_id] ?? []).filter((x) => x.id !== c.id),
-    }));
-  }
-
-  async function handleAdd(subjectId: string, title: string, type: string) {
-    const res = await fetch("/api/cours", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ subjectId, title, type: type || null }),
-    });
-    if (res.ok) {
-      const cours: Cours = await res.json();
-      setCoursMap((prev) => ({
-        ...prev,
-        [subjectId]: [...(prev[subjectId] ?? []), cours],
-      }));
-    }
-  }
-
-  if (activeTab === "postits") {
-    return (
-      <GlassCard style={{ minHeight: 400 }}>
-        <p style={{ color: "rgba(61,46,34,0.5)", fontSize: 13, fontStyle: "italic" }}>— M5 à venir</p>
-      </GlassCard>
-    );
-  }
-
-  return (
-    <>
-      {pendingDone && <ConfirmModal onConfirm={handleDoneConfirm} onCancel={() => setPendingDone(null)} />}
-      {editing && <EditModal cours={editing} onSave={(dto) => handleEdit(editing.id, dto)} onClose={() => setEditing(null)} />}
-
-      <div style={{ display: "flex", flexDirection: "column", gap: 10, height: "100%" }}>
-        {loading ? (
-          <p style={{ color: "rgba(61,46,34,0.4)", fontSize: 13, fontStyle: "italic" }}>Chargement…</p>
-        ) : (
-          <div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 8, flex: 1, alignItems: "flex-start" }}>
-            {subjects.map((s) => (
-              <SubjectColumn
-                key={s.id}
-                subject={s}
-                cours={coursMap[s.id] ?? []}
-                onDone={setPendingDone}
-                onEdit={setEditing}
-                onDelete={handleDelete}
-                onAdd={handleAdd}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-    </>
   );
 }

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { findUserByDiscordId } from "@/models/user.model";
 import { editPostit, movePostit, removePostit } from "@/controllers/postit.controller";
 import { findPostitsByUser } from "@/models/postit.model";
 
@@ -15,9 +16,12 @@ export async function PUT(req: Request, { params }: Params) {
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+  const user = await findUserByDiscordId(session.user.id);
+  if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
+
   const { id } = await params;
 
-  if (!(await ownsPostit(session.user.id, id)))
+  if (!(await ownsPostit(user.id, id)))
     return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   const dto = await req.json();
@@ -35,9 +39,12 @@ export async function DELETE(_: Request, { params }: Params) {
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+  const user = await findUserByDiscordId(session.user.id);
+  if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
+
   const { id } = await params;
 
-  if (!(await ownsPostit(session.user.id, id)))
+  if (!(await ownsPostit(user.id, id)))
     return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   await removePostit(id);

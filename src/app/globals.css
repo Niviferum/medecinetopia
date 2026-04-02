@@ -16,7 +16,7 @@
   --color-sky:       #a8d4f0;
   --color-plant:     #7aad6e;
   --color-chalk:     #3d7a6a;
-  --color-gold:      #e8c87a;
+  --color-gold:      #dba315;
   --color-text:      #3d2e22;
   --color-text-muted:#a08060;
 
@@ -53,10 +53,91 @@ input, textarea {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(200, 137, 74, 0.3); border-radius: 99px; }
 
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
 /* Cours done strikethrough animation */
 @keyframes strikethrough {
   from { width: 0; }
   to   { width: 100%; }
+}
+
+/* ── Horloge ──────────────────────────────────────────────────────────────── */
+.clock {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+  .clock {
+    bottom: auto;
+    top: 16px;
+    left: auto;
+    right: 16px;
+    transform: none;
+  }
+}
+
+/* ── Responsive dashboard ─────────────────────────────────────────────────── */
+
+/* Desktop : 3 colonnes fixes */
+.dashboard-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 220px 1fr 188px;
+  gap: 12px;
+  padding: 16px;
+  align-items: start;
+}
+
+/* Tablet (≤ 1024px) : colonne droite passe sous les deux autres */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: auto auto;
+  }
+  .dashboard-right {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+}
+
+/* Mobile (≤ 640px) : tout en colonne unique */
+@media (max-width: 640px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-right {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Grille des matières */
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  align-content: start;
+}
+
+@media (max-width: 1024px) {
+  .subjects-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .subjects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .cours-done {
@@ -70,6 +151,6 @@ input, textarea {
   top: 50%;
   left: 0;
   height: 1px;
-  background: rgba(245, 239, 228, 0.5);
+  background: rgba(120, 70, 20, 0.4);
   animation: strikethrough 0.4s ease forwards;
 }

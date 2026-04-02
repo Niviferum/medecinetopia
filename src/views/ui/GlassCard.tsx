@@ -4,16 +4,19 @@ type GlassVariant = "default" | "dark" | "warm";
 
 const variantStyles: Record<GlassVariant, CSSProperties> = {
   default: {
-    background: "rgba(255, 248, 235, 0.18)",
-    border: "1px solid rgba(255, 220, 160, 0.28)",
+    background: "#fdf8f0",
+    border: "1px solid #e8d4b4",
+    boxShadow: "0 2px 10px rgba(160,100,40,0.10)",
   },
   dark: {
-    background: "rgba(40, 22, 6, 0.42)",
-    border: "1px solid rgba(255, 200, 120, 0.2)",
+    background: "#fde8d4",
+    border: "1px solid #e8c49a",
+    boxShadow: "0 3px 12px rgba(160,100,40,0.13)",
   },
   warm: {
-    background: "rgba(200, 130, 60, 0.24)",
-    border: "1px solid rgba(255, 190, 100, 0.32)",
+    background: "#fce4e4",
+    border: "1px solid #e8b4b4",
+    boxShadow: "0 3px 12px rgba(160,60,60,0.10)",
   },
 };
 
@@ -28,9 +31,7 @@ export function GlassCard({ variant = "default", children, style }: GlassCardPro
     <div
       style={{
         ...variantStyles[variant],
-        backdropFilter: "blur(18px)",
-        WebkitBackdropFilter: "blur(18px)",
-        borderRadius: 16,
+        borderRadius: 14,
         padding: 16,
         ...style,
       }}
@@ -52,7 +53,7 @@ export function CardTitle({ children, style }: CardTitleProps) {
         fontFamily: "var(--font-lora), serif",
         fontSize: 14,
         fontWeight: 600,
-        color: "#e8c87a",
+        color: "#8b5020",
         letterSpacing: "0.04em",
         textTransform: "uppercase",
         marginBottom: 12,

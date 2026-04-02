@@ -5,7 +5,6 @@ declare module "next-auth" {
   interface Session {
     user: {
       id: string;
-      spotifyAccessToken?: string;
     } & DefaultSession["user"];
   }
 }
@@ -20,6 +19,9 @@ export interface User {
   streak: number;
   last_session_date: string | null;
   created_at: string;
+  spotify_access_token: string | null;
+  spotify_refresh_token: string | null;
+  spotify_token_expires_at: number | null;
 }
 
 export interface Subject {
@@ -101,18 +103,19 @@ export interface UpdatePostitDTO {
 
 // ── Gamification ──────────────────────────────────────────────────────────
 export interface LevelInfo {
-  level: number;
-  name: string;
+  level: number;       // 1–30
+  title: string;       // titre du groupe actuel
   currentXP: number;
-  nextLevelXP: number;
-  progressPercent: number;
+  nextLevelXP: number; // XP total pour atteindre le niveau suivant (= currentXP si max)
+  progressPercent: number; // progression dans le niveau actuel
 }
 
 export interface BadgeDefinition {
   id: string;
   name: string;
   description: string;
-  icon: string;
+  frame1: string;
+  frame2: string;
   secret: boolean;
 }
 

@@ -6,6 +6,8 @@ import { Background } from "./Background";
 import { LeftColumn } from "@/views/dashboard/LeftColumn";
 import { CenterColumn } from "@/views/dashboard/CenterColumn";
 import { RightColumn } from "@/views/dashboard/RightColumn";
+import { Clock } from "@/views/ui/Clock";
+import { DuckWidget } from "@/views/ui/DuckWidget";
 import type { User } from "@/types";
 
 interface DashboardLayoutProps {
@@ -18,6 +20,8 @@ export function DashboardLayout({ user }: DashboardLayoutProps) {
   return (
     <>
       <Background />
+      <Clock />
+      <DuckWidget />
 
       <div
         style={{
@@ -36,19 +40,12 @@ export function DashboardLayout({ user }: DashboardLayoutProps) {
           onTabChange={setActiveTab}
         />
 
-        <main
-          style={{
-            flex: 1,
-            display: "grid",
-            gridTemplateColumns: "220px 1fr 188px",
-            gap: 12,
-            padding: 16,
-            alignItems: "start",
-          }}
-        >
+        <main className="dashboard-grid">
           <LeftColumn user={user} />
           <CenterColumn activeTab={activeTab} />
-          <RightColumn />
+          <div className="dashboard-right">
+            <RightColumn />
+          </div>
         </main>
       </div>
     </>

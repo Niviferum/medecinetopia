@@ -35,6 +35,14 @@ export async function upsertUser(params: {
   return data;
 }
 
+export async function updateSpotifyTokens(
+  userId: string,
+  tokens: { spotify_access_token: string; spotify_refresh_token: string; spotify_token_expires_at: number }
+): Promise<void> {
+  const { error } = await supabaseAdmin.from("users").update(tokens).eq("id", userId);
+  if (error) throw error;
+}
+
 export async function updateUserXPAndStreak(
   userId: string,
   xp: number,
