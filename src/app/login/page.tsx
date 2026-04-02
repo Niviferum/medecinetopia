@@ -1,10 +1,11 @@
 "use client";
 
+import { Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 
-export default function LoginPage() {
+function LoginContent() {
   const params = useSearchParams();
   const error = params.get("error");
 
@@ -92,5 +93,13 @@ export default function LoginPage() {
         </button>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginContent />
+    </Suspense>
   );
 }
